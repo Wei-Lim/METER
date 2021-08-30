@@ -1,0 +1,90 @@
+---
+title: "METER"
+author: "William Truong"
+date: "27.08.2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+rm(list=ls(all = TRUE))
+cat("\014")
+
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(xml2)
+```
+
+## Extracting from lpm-file
+
+```{r}
+lpm <- readr::read_file("1.lpm")
+```
+
+
+```{r}
+doc <- read_xml(lpm)
+
+# Eindeutige Datumszeit aus der kalten Raumtemperaturmessung beziehen
+datetime_str <- xml_find_all(doc, ".//Raumtemperatur_kalt") %>% 
+	xml_attr("Time")
+
+# Leuchtendaten
+luminaire_data <- xml_find_all(doc, ".//Leuchtendaten")
+luminaire_str <- xml_attr(luminaire_data, "Leuchtenart")
+luminaire_str <- xml_attrs(luminaire_data)
+
+# Namespace der einzelnen Prüfschritte extrahieren
+norm_desc <- xml_find_all(doc, ".//Pruefschritte") %>% 
+	xml_children() %>% 
+	xml_name()
+
+# Mit den einzelnen Prüfschritte die einzelnen Messergebnisse extrahieren
+df_lpm <- data.frame(description = character())
+for (desc in norm_desc) {
+	measurements <- paste0(".//", desc, "/Messergebnisse") %>% 
+		xml_find_all(doc, .) %>% 
+		xml_children() %>% 
+		xml_children()
+	description <- xml_name(measurements)
+	values <- xml_attr(measurements, "Value")
+	df_lpm <- data.frame(description, values) %>% 
+		mutate(norm = str_replace(desc, "Norm", "U")) %>% 
+		bind_rows(df_lpm, .)
+}
+
+df_lpm <- mutate(df_lpm, datetime = datetime_str)
+
+
+```
+
+```{r}
+# renaming thermo elements
+thermoelement <- xml_find_all(doc, ".//Thermoelemente") %>% 
+	xml_children()
+
+thermo_name <- xml_name(thermoelement)
+code <- xml_attr(thermoelement, "Code")
+
+for (i in seq(length(thermo_name))) {
+	df_lpm <- df_lpm %>% 
+		mutate(description = str_replace(
+			description, 
+			thermo_name[i], 
+			paste0("T_", code[i])
+			))
+}
+```
+
+```{r}
+dfwide <- df_lpm %>% 
+	pivot_wider(names_from = c(norm, description), values_from = values)
+```
+
+
+## Session Info
+
+```{r}
+sessionInfo()
+```
+

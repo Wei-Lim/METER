@@ -1,0 +1,58 @@
+<Messung>
+	<Header Version = "1.0" Protokoll-Nr="PPR 21xy/1-240 48O6 940 DA 0.750A1 Pw PO" Leuchtentyp="VG-Leuchte" Datum="15.06.2020">
+	</Header>
+	<Data PruefBoxNummer="1" aktueller_Pruefschritt="Norm110" LeuchtenTyp="VG-Leuchte" Ext_LMG_AnKreis="0">
+		<Allgemeine_Daten>
+			<Allgemein Protokollnummer="PPR 21xy/1-240 48O6 940 DA 0.750A1 Pw PO" Aktenzeichen="" Ausweis="" Grund_der_Messung="VDE Messung" Produktserie="APOLLO G2 SKII Cityline" Artikel_Nr="PPR 21xy/1-240 48O6 940 DA 0.750" PrueferName="Herr Klos">
+			</Allgemein>
+			<Hersteller Name="Philip Pracht Lighting GmbH" Strasse="Am Seerain 3" Postleitzahl="35232" Ort="Dautphetal - Buchenau" Land="Deutschland">
+			</Hersteller>
+			<Lampenart Teile-Nr="LED 940" Bauform="48O6" Schalttemperatur="48O6" Anzahl="5" Leistung="36,00">
+			</Lampenart>
+			<Limitor Teile-Nr="" Bauform="" Schalttemperatur="" MaxBlockStrom="">
+			</Limitor>
+			<Leuchtendaten Leuchtenart="LED Anbauleuchte" Montageart="Deckenmontage" Schutzklasse="II" Nennspannung="230" Netzfrequenz="50..60" Umgebungstemperatur="25" IP-Schutzart="68">
+			</Leuchtendaten>
+		</Allgemeine_Daten>
+		<Weitere_Daten Schutzartpruefung="/;//;/ohne anormalen Betrieb / without abnormal operation/;/mit DV 3x2,5mm² + 2x1,5mm² belastet mit 16A" Bemerkungen="/;/1x Xitanium 36W 0.3-1A 54V TD 230V/;/2x PL-LIN-Z6 4000-940 560X20-LV/;/1x PL-LIN-Z6 2000-940 280X20-LV" Verteiler="I_DC: 1x 0.750A/;//;//;/" Muster="Original" Strahlrichtung="0°   (senkrecht)" Z-Filter="" Z-Glas="" Z-Vorsatz="">
+		</Weitere_Daten>
+		<Raumtemperatur_kalt Value="23,90" Time="15.06.2020 17:09:01">
+		</Raumtemperatur_kalt>
+		<Konstruktive_Daten AnzahlMesskreise="1" F-Leuchte="wahr" FF-Leuchte="wahr" Handstart="falsch" Spannungspruefung="wahr" Abkuehlphase="0">
+			<Kreis_1 Herstellername="Philips" Typname="Xitanium 36W 0.3-1A 54V TD 230V" Elektisches_Verhalten="EVG" Z="0,000" tw="0,000" Delta_t="" Nennspannung="0,000" Nennstrom="0,000" AnormBetrieb_VG_ThermoNummer="0" AnormBetrieb_Befest_ThermoNummer="4">
+				<Pruefkreis Box-Nr="1" Kreis-Nr="1">
+				</Pruefkreis>
+			</Kreis_1>
+			<Zuendgerät Hersteller="" Typname="" Zuendspannung="0,000">
+			</Zuendgerät><Ableitstrom Kalt="0,000" Warm="0,000">
+			</Ableitstrom>
+			<Fassungen>
+				<Lampenfassung Bezeichnung="" Tmax="0,000"></Lampenfassung>
+				<Starterfassung Bezeichnung="" Tmax="0,00"></Starterfassung>
+			</Fassungen>
+			<Verdrahtung>
+				<Innenverdrahtung Bezeichnung="N2GFA" Querschnitt="0,750" Tmax="180,00">
+				</Innenverdrahtung>
+				<Durchgangsverdrahtung Bezeichnung="N2GFA" Querschnitt="2,500" Tmax="180,00">
+				</Durchgangsverdrahtung>
+			</Verdrahtung>
+			<Kondensatoren>
+				<Kompensationskondensator Bezeichnung="" Kapazitaet="0,000" Toleranz="0,000" Unenn="0,000">
+				</Kompensationskondensator>
+				<Entstoerkondensator Bezeichnung2="" Kapazitaet2="0,000" Toleranz2="0,000" Unenn2="0,000">
+				</Entstoerkondensator>
+			</Kondensatoren>
+			<Messlampe Referenzlampen-Nr="" Referenzlampenhersteller="" Referenzlampen-Nr2="" Referenzlampenhersteller2="">
+			</Messlampe>
+			</Konstruktive_Daten><Pruefschritte><Norm090 Abgeschlossen="wahr" Datum="15.06.2020 14:16:45">
+				<Messergebnisse>
+					<Kreis_1>
+						<Raumtemperatur Value="23,439" Time="15.06.2020 14:04:59">
+						</Raumtemperatur>
+						<UNenn Value="207,300" Time="15.06.2020 14:16:42">
+						</UNenn>
+						<INenn Value="0,181" Time="15.06.2020 14:16:42">
+						</INenn>
+						<PNenn Value="36,900" Time="15.06.2020 14:16:42">
+						</PNenn>
+						<U_Lampe Value="207,500" Time="15.06.2020 12:02:39"></U_Lampe><VG_BWQuotient Value="0,000" Time="15.06.2020 14:16:45"></VG_BWQuotient></Kreis_1><Temperaturen><ThermoElement1 Value="31,212" Time="15.06.2020 14:04:58"></ThermoElement1><ThermoElement2 Value="56,304" Time="15.06.2020 14:04:58"></ThermoElement2><ThermoElement3 Value="55,289" Time="15.06.2020 14:04:58"></ThermoElement3><ThermoElement4 Value="57,598" Time="15.06.2020 14:04:59"></ThermoElement4><ThermoElement5 Value="37,492" Time="15.06.2020 14:04:59"></ThermoElement5><ThermoElement6 Value="36,625" Time="15.06.2020 14:04:59"></ThermoElement6><ThermoElement7 Value="40,142" Time="15.06.2020 14:04:59"></ThermoElement7><ThermoElement8 Value="38,508" Time="15.06.2020 14:04:59"></ThermoElement8><ThermoElement9 Value="35,041" Time="15.06.2020 14:04:57"></ThermoElement9><ThermoElement10 Value="32,833" Time="15.06.2020 14:04:57"></ThermoElement10></Temperaturen></Messergebnisse></Norm090><Norm100 Abgeschlossen="wahr" Datum="15.06.2020 15:18:05"><Messergebnisse><Kreis_1><Raumtemperatur Value="23,607" Time="15.06.2020 15:06:20"></Raumtemperatur><UNenn Value="229,300" Time="15.06.2020 15:18:03"></UNenn><INenn Value="0,164" Time="15.06.2020 15:18:03"></INenn><PNenn Value="36,900" Time="15.06.2020 15:18:03"></PNenn><U_Lampe Value="230,000" Time="15.06.2020 14:17:48"></U_Lampe><VG_BWQuotient Value="0,000" Time="15.06.2020 15:18:05"></VG_BWQuotient></Kreis_1><Temperaturen><ThermoElement1 Value="31,580" Time="15.06.2020 15:06:20"></ThermoElement1><ThermoElement2 Value="56,540" Time="15.06.2020 15:06:20"></ThermoElement2><ThermoElement3 Value="55,396" Time="15.06.2020 15:06:20"></ThermoElement3><ThermoElement4 Value="57,606" Time="15.06.2020 15:06:20"></ThermoElement4><ThermoElement5 Value="37,667" Time="15.06.2020 15:06:19"></ThermoElement5><ThermoElement6 Value="36,762" Time="15.06.2020 15:06:19"></ThermoElement6><ThermoElement7 Value="41,095" Time="15.06.2020 15:06:19"></ThermoElement7><ThermoElement8 Value="39,124" Time="15.06.2020 15:06:19"></ThermoElement8><ThermoElement9 Value="35,083" Time="15.06.2020 15:06:17"></ThermoElement9><ThermoElement10 Value="32,934" Time="15.06.2020 15:06:17"></ThermoElement10></Temperaturen></Messergebnisse></Norm100><Norm106 Abgeschlossen="wahr" Datum="15.06.2020 16:19:26"><Messergebnisse><Kreis_1><Raumtemperatur Value="23,760" Time="15.06.2020 16:07:40"></Raumtemperatur><UNenn Value="244,000" Time="15.06.2020 16:19:23"></UNenn><INenn Value="0,155" Time="15.06.2020 16:19:23"></INenn><PNenn Value="36,900" Time="15.06.2020 16:19:23"></PNenn><U_Lampe Value="242,900" Time="15.06.2020 15:19:08"></U_Lampe><VG_BWQuotient Value="0,000" Time="15.06.2020 16:19:26"></VG_BWQuotient></Kreis_1><Temperaturen><ThermoElement1 Value="31,735" Time="15.06.2020 16:07:39"></ThermoElement1><ThermoElement2 Value="56,638" Time="15.06.2020 16:07:39"></ThermoElement2><ThermoElement3 Value="55,550" Time="15.06.2020 16:07:40"></ThermoElement3><ThermoElement4 Value="57,655" Time="15.06.2020 16:07:40"></ThermoElement4><ThermoElement5 Value="37,851" Time="15.06.2020 16:07:40"></ThermoElement5><ThermoElement6 Value="36,885" Time="15.06.2020 16:07:40"></ThermoElement6><ThermoElement7 Value="41,770" Time="15.06.2020 16:07:40"></ThermoElement7><ThermoElement8 Value="39,443" Time="15.06.2020 16:07:39"></ThermoElement8><ThermoElement9 Value="35,273" Time="15.06.2020 16:07:40"></ThermoElement9><ThermoElement10 Value="33,184" Time="15.06.2020 16:07:39"></ThermoElement10></Temperaturen></Messergebnisse></Norm106><Norm110 Abgeschlossen="wahr" Datum="15.06.2020 17:20:48"><Messergebnisse><Kreis_1><Raumtemperatur Value="23,901" Time="15.06.2020 17:09:01"></Raumtemperatur><UNenn Value="253,100" Time="15.06.2020 17:20:45"></UNenn><INenn Value="0,149" Time="15.06.2020 17:20:45"></INenn><PNenn Value="36,700" Time="15.06.2020 17:20:45"></PNenn><U_Lampe Value="254,300" Time="15.06.2020 16:20:29"></U_Lampe><VG_BWQuotient Value="0,000" Time="15.06.2020 17:20:48"></VG_BWQuotient></Kreis_1><Temperaturen><ThermoElement1 Value="31,865" Time="15.06.2020 17:09:00"></ThermoElement1><ThermoElement2 Value="56,797" Time="15.06.2020 17:09:01"></ThermoElement2><ThermoElement3 Value="55,617" Time="15.06.2020 17:09:01"></ThermoElement3><ThermoElement4 Value="57,632" Time="15.06.2020 17:09:01"></ThermoElement4><ThermoElement5 Value="37,969" Time="15.06.2020 17:09:01"></ThermoElement5><ThermoElement6 Value="37,039" Time="15.06.2020 17:09:00"></ThermoElement6><ThermoElement7 Value="42,098" Time="15.06.2020 17:09:00"></ThermoElement7><ThermoElement8 Value="39,645" Time="15.06.2020 17:09:00"></ThermoElement8><ThermoElement9 Value="35,304" Time="15.06.2020 17:09:00"></ThermoElement9><ThermoElement10 Value="33,127" Time="15.06.2020 17:09:00"></ThermoElement10></Temperaturen></Messergebnisse></Norm110></Pruefschritte><Thermoelemente Anzahl="10"><ThermoElement1 Code="BD" Beschreibung="Bef.Fläche Decke" Englisch="Mounting surface ceiling" Franzoesisch="Temp. de surface d´appui" Italienisch="Mounting surface ceiling" Spanisch="Mounting surface ceiling" Beharrung="wahr" Tmax="90,00" Tmax_anom="0,00" Geradengleichung="wahr" KreisNummer="1" HandleNummer="-2064711588" ThermoelementNummer="1"></ThermoElement1><ThermoElement2 Code="AK_S" Beschreibung="Anschlussklemme SLK" Englisch="Connection terminal SLK" Franzoesisch="" Italienisch="" Spanisch="" Beharrung="falsch" Tmax="85,00" Tmax_anom="0,00" Geradengleichung="falsch" KreisNummer="1" HandleNummer="-2064711587" ThermoelementNummer="2"></ThermoElement2><ThermoElement3 Code="D12" Beschreibung="DV 4x2,5mm² - 16 A" Englisch="Thr. wiring 4x2,5mm²-16A" Franzoesisch="" Italienisch="" Spanisch="" Beharrung="falsch" Tmax="105,00" Tmax_anom="0,00" Geradengleichung="falsch" KreisNummer="1" HandleNummer="-2064711586" ThermoelementNummer="3"></ThermoElement3><ThermoElement4 Code="EVG 1" Beschreibung="EVG 1 Tc Punkt" Englisch="ECG 1 tc point" Franzoesisch="" Italienisch="" Spanisch="" Beharrung="wahr" Tmax="75,00" Tmax_anom="0,00" Geradengleichung="wahr" KreisNummer="1" HandleNummer="-2064711585" ThermoelementNummer="4"></ThermoElement4><ThermoElement5 Code="LED 1E" Beschreibung="LED 1 Höhe EVG" Englisch="LED 1 near ECG" Franzoesisch="" Italienisch="" Spanisch="" Beharrung="falsch" Tmax="75,00" Tmax_anom="0,00" Geradengleichung="falsch" KreisNummer="1" HandleNummer="-2064711584" ThermoelementNummer="5"></ThermoElement5><ThermoElement6 Code="LED 1M" Beschreibung="LED 1 Mitte Leuchte" Englisch="LED 1 middle luminaire" Franzoesisch="" Italienisch="" Spanisch="" Beharrung="falsch" Tmax="75,00" Tmax_anom="0,00" Geradengleichung="falsch" KreisNummer="1" HandleNummer="-2064711583" ThermoelementNummer="6"></ThermoElement6><ThermoElement7 Code="ESB" Beschreibung="Einschaltstrombegrenzer" Englisch="Inrush current limiter" Franzoesisch="" Italienisch="" Spanisch="" Beharrung="falsch" Tmax="80,00" Tmax_anom="0,00" Geradengleichung="falsch" KreisNummer="1" HandleNummer="-2064711582" ThermoelementNummer="7"></ThermoElement7><ThermoElement8 Code="SPC" Beschreibung="Überspannungsschutz" Englisch="Power surge protector" Franzoesisch="" Italienisch="" Spanisch="" Beharrung="falsch" Tmax="80,00" Tmax_anom="0,00" Geradengleichung="falsch" KreisNummer="1" HandleNummer="-2064711581" ThermoelementNummer="8"></ThermoElement8><ThermoElement9 Code="LOH" Beschreibung="Leuchtenoberfläche horizontal" Englisch="Luminaire surface hor." Franzoesisch="" Italienisch="" Spanisch="" Beharrung="falsch" Tmax="90,00" Tmax_anom="0,00" Geradengleichung="falsch" KreisNummer="1" HandleNummer="-2064711580" ThermoelementNummer="9"></ThermoElement9><ThermoElement10 Code="LOV" Beschreibung="Leuchtenoberfläche vertikal" Englisch="Luminaire surface vert." Franzoesisch="" Italienisch="" Spanisch="" Beharrung="falsch" Tmax="150,00" Tmax_anom="0,00" Geradengleichung="falsch" KreisNummer="1" HandleNummer="-2064711579" ThermoelementNummer="10"></ThermoElement10></Thermoelemente></Data></Messung>

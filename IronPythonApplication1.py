@@ -38,34 +38,34 @@ class MyForm(Form):
     def buttonPressed(self, sender, args):
         self.count += 1
         self.label.Text = "Du hast mich %s mal geklickt." % self.count
-        self.analyzeXML();
+        self.analyzeXML()
         pass
 
     def analyzeXML(self):
-        tree=ET.parse('1.xml')
-        #self.dg1.Rows[0].Cells[0].Value = "1.xml"
+        tree = ET.parse('1.lpm')
+        #self.dg1.Rows[0].Cells[0].Value = "1.lpm"
         root = tree.getroot()
-        temp_nodes= root.findall(".//*/Temperaturen")
-        pruef_nodes=root.findall(".//*/Pruefschritte/*")
-        Thermoelement_nodes=root.findall(".//*/Thermoelemente/*")
+        temp_nodes = root.findall(".//*/Temperaturen")
+        pruef_nodes = root.findall(".//*/Pruefschritte/*")
+        Thermoelement_nodes = root.findall(".//*/Thermoelemente/*")
         #Anzahl an Prüfschritten (0,9 Un, 1,0 Un,... etc.)
-        tempsteps_count=len(temp_nodes)
+        tempsteps_count = len(temp_nodes)
         #tempelements_count = root.findall(".//*/Thermoelemente").get('Anzahl')+1
-        self.dg1.ColumnCount=50
-        self.dg2.ColumnCount=50
-        self.dg1.Columns[0].Name="Filename"
-        self.dg2.Columns[0].Name="Filename"
+        self.dg1.ColumnCount = 50
+        self.dg2.ColumnCount = 50
+        self.dg1.Columns[0].Name = "Filename"
+        self.dg2.Columns[0].Name = "Filename"
         #Test....self.dg1.Rows.Add(str(tempelements_count))
         #Header in DG1 eintragen
         for index2,names in enumerate(temp_nodes):
             #temper_nodes = names.findall(".//*/Temperaturen")
             for index,temps in enumerate(names):
                 #self.label.Text=temps.tag
-                self.dg1.Columns[index+1+index2*8].Name=temps.tag + " " + pruef_nodes[index2].tag#temps.tag
+                self.dg1.Columns[index+1+index2*8].Name = temps.tag + " " + pruef_nodes[index2].tag #temps.tag
         
         #Werte von messungen in DG1 eintragen
         for j,temps in enumerate(temp_nodes):
-            self.dg1.Rows.Add("1.xml")
+            self.dg1.Rows.Add("1.lpm")
             for i,elements in enumerate(temps):
                 self.dg1.Rows[0].Cells[i+1+j*8].Value=elements.get('Value')
         #Header in DG2 eintragen
