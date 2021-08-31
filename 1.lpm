@@ -14,7 +14,7 @@
 			<Leuchtendaten Leuchtenart="LED Anbauleuchte" Montageart="Deckenmontage" Schutzklasse="II" Nennspannung="230" Netzfrequenz="50..60" Umgebungstemperatur="25" IP-Schutzart="68">
 			</Leuchtendaten>
 		</Allgemeine_Daten>
-		<Weitere_Daten Schutzartpruefung="/;//;/ohne anormalen Betrieb / without abnormal operation/;/mit DV 3x2,5mm² + 2x1,5mm² belastet mit 16A" Bemerkungen="/;/1x Xitanium 36W 0.3-1A 54V TD 230V/;/2x PL-LIN-Z6 4000-940 560X20-LV/;/1x PL-LIN-Z6 2000-940 280X20-LV" Verteiler="I_DC: 1x 0.750A/;//;//;/" Muster="Original" Strahlrichtung="0°   (senkrecht)" Z-Filter="" Z-Glas="" Z-Vorsatz="">
+		<Weitere_Daten Schutzartpruefung="1/;/2/;/ohne anormalen Betrieb / without abnormal operation/;/mit DV 3x2,5mm² + 2x1,5mm² belastet mit 16A" Bemerkungen="PRR I 8025/1-192 48FTW 9xx .800A1/;/1x Xitanium 36W 0.3-1A 54V TD 230V/;/2x PL-LIN-Z6 4000-940 560X20-LV/;/1x PL-LIN-Z6 2000-940 280X20-LV" Verteiler="I_DC: 1x 0.750A/;//;//;/" Muster="Original" Strahlrichtung="0°   (senkrecht)" Z-Filter="" Z-Glas="" Z-Vorsatz="">
 		</Weitere_Daten>
 		<Raumtemperatur_kalt Value="23,90" Time="15.06.2020 17:09:01">
 		</Raumtemperatur_kalt>
