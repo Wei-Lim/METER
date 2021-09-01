@@ -1,46 +1,23 @@
----
-title: "METER - Adding LPG measurements into a xlsx database"
-author: "William Truong"
-date: "27.08.2021"
-output: html_document
----
-
-```{r setup, include=FALSE}
-rm(list=ls(all = TRUE))
-cat("\014")
-
-knitr::opts_chunk$set(echo = TRUE)
-
 library(tidyverse)
 library(xml2)
 library(openxlsx)
-```
 
-
-```{r}
+# loading current database
 df <- readWorkbook("LPG_Temperatur_DB.xlsx", 1) %>% 
 	mutate(datetime = convertToDateTime(datetime))
-```
-
 
 ## Extracting from lpm-file
-
-
-```{r}
 dir_path <- choose.dir(
 	"T:/Leuchten", 
 	caption = "Ordner mit *.lpm Dateien auswählen."
-	)
+)
 files_path <- list.files(
 	path = dir_path, 
 	pattern = ".lpm$", 
 	full.names = TRUE, 
 	recursive = TRUE
-	)
-```
+)
 
-
-```{r}
 for (file in files_path) {
 	doc <- readr::read_file(file) %>% 
 		read_xml()
@@ -122,7 +99,7 @@ for (file in files_path) {
 					description, 
 					thermo_name[i], 
 					paste0("T_", code[i])
-					)
+				)
 				)
 		}
 		
@@ -136,24 +113,13 @@ for (file in files_path) {
 	}	
 }
 
-
-```
-
-```{r}
-df
-```
-
-
 ## Saving Excel database
-
-```{r}
 wb <- createWorkbook()
 sheet_name <- "LPG_DB"
 
 addWorksheet(wb, sheet_name)
 
 writeDataTable(wb, sheet_name, df, tableStyle = "TableStyleMedium9")
-
 
 baseStyle <- createStyle(valign = "top")
 addStyle(
@@ -163,7 +129,7 @@ addStyle(
 	rows = 1:nrow(df) + 1, 
 	cols = 1:ncol(df), 
 	gridExpand = TRUE
-	)
+)
 
 wrapStyle <- createStyle(wrapText = TRUE, valign = "top")
 notes_colidx <- grep("notes", colnames(df))
@@ -174,7 +140,7 @@ addStyle(
 	rows = 1:nrow(df) + 1, 
 	cols = notes_colidx, 
 	gridExpand = TRUE
-	)
+)
 
 dateStyle <- createStyle(numFmt = "dd.mm.yyyy hh:mm:ss", valign = "top")
 date_colidx <- grep("datetime", colnames(df))
@@ -190,18 +156,9 @@ addStyle(
 setColWidths(wb, sheet_name, cols = 1:ncol(df), widths = "auto")
 setColWidths(wb, sheet_name, cols = notes_colidx, widths = c(50, 40, 20))
 setColWidths(wb, sheet_name, cols = date_colidx, widths = 17)
+
 #openXL(wb)
-```
-
-
-```{r}
 saveWorkbook(wb, "LPG_Temperatur_DB.xlsx", overwrite = TRUE)
-```
-
 
 ## Session Info
-
-```{r}
-sessionInfo()
-```
-
+print(sessionInfo())
