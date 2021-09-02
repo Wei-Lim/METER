@@ -8,7 +8,8 @@ df <- readWorkbook("LPG_Temperatur_DB.xlsx", 1) %>%
 
 ## Extracting from lpm-file
 dir_path <- choose.dir(
-	"T:/Leuchten", 
+	"H:/Projekte/Python/METER",
+	#"T:/Leuchten", 
 	caption = "Ordner mit *.lpm Dateien auswählen."
 )
 files_path <- list.files(
@@ -23,94 +24,100 @@ for (file in files_path) {
 		read_xml()
 	
 	# Eindeutige Datumszeit aus der kalten Raumtemperaturmessung beziehen
-	datetime <- xml_find_all(doc, ".//Raumtemperatur_kalt") %>% 
-		xml_attr("Time") %>% 
+	datetime <- xml_find_all(doc, ".//Raumtemperatur_kalt") %>%
+		xml_attr("Time") %>%
 		lubridate::dmy_hms(tz = "CET")
+	# Kontrolle der eingelesenen Datumszeit 
+	if (is.na(datetime)) {
+		datetime <- lubridate::dmy("01.01.1999", tz = "CET")
+	}
 	
-	if (!max(datetime == df$datetime)) {
-		# Leuchtendaten extrahieren
-		df_luminaire <- xml_find_all(doc, ".//Leuchtendaten") %>% 
-			xml_attrs() %>% 
-			data.frame() %>% 
-			t() %>% 
-			data.frame() %>% 
-			remove_rownames()
-		
-		# Leuchtenfamilie extrahieren
-		product_family <- xml_find_all(doc, ".//Allgemein") %>% 
-			xml_attr("Produktserie")
-		
-		# Textblöcke Schutartprüfung, Bemerkungen, Verteiler extrahieren
-		notes_nodes <- xml_find_all(doc, ".//Weitere_Daten")
-		note_schutzart <- xml_attr(notes_nodes, "Schutzartpruefung") %>% 
-			gsub("/;/", "\n", .)
-		note_bemerkung <- xml_attr(notes_nodes, "Bemerkungen") %>% 
-			gsub("/;/", "\n", .)
-		note_verteiler <- xml_attr(notes_nodes, "Verteiler") %>% 
-			gsub("/;/", "\n", .)
-		
-		# Namespace der einzelnen Prüfschritte extrahieren
-		norm_desc <- xml_find_all(doc, ".//Pruefschritte") %>% 
-			xml_children() %>% 
-			xml_name()
-		
-		# Mit den einzelnen Prüfschritte die einzelnen Messergebnisse extrahieren
-		df_lpm <- data.frame(description = character())
-		for (desc in norm_desc) {
-			measurements <- paste0(".//", desc, "/Messergebnisse") %>% 
-				xml_find_all(doc, .) %>% 
+	if (datetime > lubridate::dmy("01.01.2000", tz = "CET")) {
+		if (!max(datetime == df$datetime)) {
+			# Leuchtendaten extrahieren
+			df_luminaire <- xml_find_all(doc, ".//Leuchtendaten") %>% 
+				xml_attrs() %>% 
+				data.frame() %>% 
+				t() %>% 
+				data.frame() %>% 
+				remove_rownames()
+			
+			# Leuchtenfamilie extrahieren
+			product_family <- xml_find_all(doc, ".//Allgemein") %>% 
+				xml_attr("Produktserie")
+			
+			# Textblöcke Schutartprüfung, Bemerkungen, Verteiler extrahieren
+			notes_nodes <- xml_find_all(doc, ".//Weitere_Daten")
+			note_schutzart <- xml_attr(notes_nodes, "Schutzartpruefung") %>% 
+				gsub("/;/", "\n", .)
+			note_bemerkung <- xml_attr(notes_nodes, "Bemerkungen") %>% 
+				gsub("/;/", "\n", .)
+			note_verteiler <- xml_attr(notes_nodes, "Verteiler") %>% 
+				gsub("/;/", "\n", .)
+			
+			# Namespace der einzelnen Prüfschritte extrahieren
+			norm_desc <- xml_find_all(doc, ".//Pruefschritte") %>% 
 				xml_children() %>% 
+				xml_name()
+			
+			# extracting codename of thermoelements
+			thermoelement <- xml_find_all(doc, ".//Thermoelemente") %>% 
 				xml_children()
-			description <- xml_name(measurements)
-			values <- xml_attr(measurements, "Value") %>% 
-				gsub("\\.", "", .) %>% 
-				gsub(",", ".", .) %>% 
-				as.numeric()
-			df_lpm <- data.frame(description, values) %>% 
-				mutate(norm = str_replace(desc, "Norm", "U")) %>% 
-				bind_rows(df_lpm, .)
-		}
-		
-		# additional columns
-		df_lpm <- df_lpm %>% 
-			mutate(
-				datetime = datetime,
-				family = product_family,
-				luminaire = df_luminaire$Leuchtenart,
-				mounting = df_luminaire$Montageart,
-				SK = df_luminaire$Schutzklasse,
-				IP = df_luminaire$IP.Schutzart,
-				notes1 = note_schutzart,
-				notes2 = note_bemerkung,
-				notes3 = note_verteiler
-			)
-		
-		# renaming thermo elements
-		thermoelement <- xml_find_all(doc, ".//Thermoelemente") %>% 
-			xml_children()
-		
-		thermo_name <- xml_name(thermoelement)
-		code <- xml_attr(thermoelement, "Code") %>% 
-			gsub(" ", "_", .) # Ersetzt Leerzeichen
-		
-		for (i in seq(length(thermo_name))) {
+			
+			thermo_name <- xml_name(thermoelement)
+			code <- xml_attr(thermoelement, "Code") %>% 
+				gsub(" ", "_", .) %>% # Ersetzt Leerzeichen
+				gsub("LED_tc", "LED_Tc", .) %>% # replace incase sensitive names
+				paste0("T_", .)
+			
+			# Mit den einzelnen Prüfschritte die einzelnen Messergebnisse extrahieren
+			df_lpm <- data.frame(description = character())
+			for (desc in norm_desc) {
+				measurements <- paste0(".//", desc, "/Messergebnisse") %>% 
+					xml_find_all(doc, .) %>% 
+					xml_children() %>% 
+					xml_children()
+				description <- xml_name(measurements)
+				description[grep("Thermo", description)] <- code # replace with code
+				desc_unique <- unique(description)
+				values <- xml_attr(measurements, "Value") %>% 
+					gsub("\\.", "", .) %>% 
+					gsub(",", ".", .) %>% 
+					as.numeric()
+				df_lpm <- data.frame(description, values) %>% 
+					group_by(description) %>% 
+					arrange(desc(values)) %>% # only maximum temperature value
+					distinct(description, .keep_all = TRUE) %>% # removing duplicate codes
+					arrange(match(description, desc_unique)) %>% 
+					mutate(norm = str_replace(desc, "Norm", "U")) %>% 
+					bind_rows(df_lpm, .)
+			}
+			
+			# additional columns
 			df_lpm <- df_lpm %>% 
-				mutate(description = str_replace(
-					description, 
-					thermo_name[i], 
-					paste0("T_", code[i])
+				mutate(
+					datetime = datetime,
+					family = product_family,
+					luminaire = df_luminaire$Leuchtenart,
+					mounting = df_luminaire$Montageart,
+					SK = df_luminaire$Schutzklasse,
+					IP = df_luminaire$IP.Schutzart,
+					notes1 = note_schutzart,
+					notes2 = note_bemerkung,
+					notes3 = note_verteiler
 				)
-				)
-		}
-		
-		# reshape from long to wide
-		df <- df_lpm %>% 
-			pivot_wider(names_from = c(norm, description), values_from = values) %>% 
-			bind_rows(df) %>% 
-			arrange(desc(datetime))
-	} else {
-		print(paste("Temperaturmessung", datetime, "bereits eingetragen"))
-	}	
+			
+			print(file)
+			
+			# reshape from long to wide
+			df <- df_lpm %>% 
+				pivot_wider(names_from = c(norm, description), values_from = values) %>% 
+				bind_rows(df) %>% 
+				arrange(desc(datetime))
+		} else {
+			print(paste("Temperaturmessung", datetime, "bereits eingetragen"))
+		}	
+	}
 }
 
 ## Saving Excel database
