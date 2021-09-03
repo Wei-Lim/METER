@@ -8,8 +8,8 @@ df <- readWorkbook("LPG_Temperatur_DB.xlsx", 1) %>%
 
 ## Extracting from lpm-file
 dir_path <- choose.dir(
-	"H:/Projekte/Python/METER",
-	#"T:/Leuchten", 
+	#"H:/Projekte/Python/METER",
+	"T:/Leuchten", 
 	caption = "Ordner mit *.lpm Dateien auswählen."
 )
 files_path <- list.files(
@@ -68,6 +68,7 @@ for (file in files_path) {
 			code <- xml_attr(thermoelement, "Code") %>% 
 				gsub(" ", "_", .) %>% # Ersetzt Leerzeichen
 				gsub("LED_tc", "LED_Tc", .) %>% # replace incase sensitive names
+				gsub("LED_TC", "LED_Tc", .) %>% # replace incase sensitive names
 				paste0("T_", .)
 			
 			# Mit den einzelnen Prüfschritte die einzelnen Messergebnisse extrahieren
