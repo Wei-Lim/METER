@@ -1,0 +1,71 @@
+---
+title: "Statistiken für LPG-Messungen"
+author: "William Truong"
+date: "03.09.2021"
+output: html_document
+editor_options:
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(openxlsx)
+library(ggplot2)
+library(lubridate)
+```
+
+
+```{r pressure, echo=FALSE}
+db <- readWorkbook("LPG_Temperatur_DB.xlsx", 1) %>% 
+	mutate(datetime = convertToDateTime(datetime))
+```
+
+# Datenvorverarbeitung
+
+```{r}
+df <- db %>% 
+	mutate(year = year(datetime), month = month(datetime))
+```
+
+
+# Durchgeführte LPG-Messungen
+
+## Pro Jahr
+```{r}
+df %>% 
+	count(year) %>% 
+	ggplot(aes(x = factor(year), y = n)) +
+		geom_bar(stat = 'identity') +
+	labs(
+		x = "Jahr",
+		y = "Anzahl Messungen"
+	)
+```
+
+## Pro Monat und Jahr
+
+```{r}
+count(df, month)
+```
+
+
+```{r}
+df %>% 
+	group_by(year) %>% 
+	count(month) %>% 
+	ggplot(aes(x = factor(month), y = n, color = factor(year))) +
+		geom_bar(
+			aes(fill = factor(year)), 
+			stat = 'identity',
+			position = position_dodge()
+			) +
+	labs(
+		x = "Monat",
+		y = "Anzahl",
+		color = "Jahr",
+		fill = "Jahr"
+	)
+
+```
+
