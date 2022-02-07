@@ -2,14 +2,14 @@ library(tidyverse)
 library(xml2)
 library(openxlsx)
 
-# loading current database
-df <- readWorkbook("LPG_Temperatur_DB.xlsx", 1) %>% 
+# loading current database ----
+df <- readWorkbook("data_extracted/LPG_Temperatur_DB.xlsx", 1) %>% 
 	mutate(datetime = convertToDateTime(datetime))
 
-## Extracting from lpm-file
+# Extracting from lpm-file ----
 dir_path <- choose.dir(
-	#"H:/Projekte/Python/METER",
-	"T:/Leuchten", 
+	"H:/Projekte/RStudio/METER",
+	#"T:/Leuchten", 
 	caption = "Ordner mit *.lpm Dateien auswählen."
 )
 files_path <- list.files(
@@ -46,7 +46,7 @@ for (file in files_path) {
 			product_family <- xml_find_all(doc, ".//Allgemein") %>% 
 				xml_attr("Produktserie")
 			
-			# Textblöcke Schutartprüfung, Bemerkungen, Verteiler extrahieren
+			# Textblöcke Schutzartprüfung, Bemerkungen, Verteiler extrahieren
 			notes_nodes <- xml_find_all(doc, ".//Weitere_Daten")
 			note_schutzart <- xml_attr(notes_nodes, "Schutzartpruefung") %>% 
 				gsub("/;/", "\n", .)
@@ -78,19 +78,24 @@ for (file in files_path) {
 					xml_find_all(doc, .) %>% 
 					xml_children() %>% 
 					xml_children()
-				description <- xml_name(measurements)
+				description <- xml_name(measurements) %>% 
+					gsub("Nenn", "_Nenn", .) %>% 
+					gsub("Raumtemperatur", "T_Raumtemperatur", .) %>% 
+					gsub("VG_BWQuotient", "R_VG_BWQuotient", .)
 				description[grep("Thermo", description)] <- code # replace with code
 				desc_unique <- unique(description)
 				values <- xml_attr(measurements, "Value") %>% 
 					gsub("\\.", "", .) %>% 
 					gsub(",", ".", .) %>% 
 					as.numeric()
+				desc <- gsub("Norm", "U", desc) %>%
+					gsub("Anorm", "UA", .)
 				df_lpm <- data.frame(description, values) %>% 
 					group_by(description) %>% 
 					arrange(desc(values)) %>% # only maximum temperature value
 					distinct(description, .keep_all = TRUE) %>% # removing duplicate codes
 					arrange(match(description, desc_unique)) %>% 
-					mutate(norm = str_replace(desc, "Norm", "U")) %>% 
+					mutate(norm = desc) %>% 
 					bind_rows(df_lpm, .)
 			}
 			
@@ -105,7 +110,8 @@ for (file in files_path) {
 					IP = df_luminaire$IP.Schutzart,
 					notes1 = note_schutzart,
 					notes2 = note_bemerkung,
-					notes3 = note_verteiler
+					notes3 = note_verteiler,
+					filepath = file
 				)
 			
 			print(file)
@@ -114,14 +120,20 @@ for (file in files_path) {
 			df <- df_lpm %>% 
 				pivot_wider(names_from = c(norm, description), values_from = values) %>% 
 				bind_rows(df) %>% 
-				arrange(desc(datetime))
+				arrange(desc(datetime)) %>% 
+				relocate(sort(names(.))) %>% 
+				relocate(
+					datetime, family, luminaire, mounting, SK, IP, 
+					notes1, notes2, notes3
+					) %>% 
+				relocate(filepath, .after = last_col())
 		} else {
 			print(paste("Temperaturmessung", datetime, "bereits eingetragen"))
 		}	
 	}
 }
 
-## Saving Excel database
+# Saving Excel database ----
 wb <- createWorkbook()
 sheet_name <- "LPG_DB"
 
@@ -162,11 +174,11 @@ addStyle(
 )
 
 setColWidths(wb, sheet_name, cols = 1:ncol(df), widths = "auto")
-setColWidths(wb, sheet_name, cols = notes_colidx, widths = c(50, 40, 20))
+setColWidths(wb, sheet_name, cols = notes_colidx, widths = c(50, 50, 20))
 setColWidths(wb, sheet_name, cols = date_colidx, widths = 17)
 
 #openXL(wb)
-saveWorkbook(wb, "LPG_Temperatur_DB.xlsx", overwrite = TRUE)
+saveWorkbook(wb, "data_extracted/LPG_Temperatur_DB.xlsx", overwrite = TRUE)
 
 ## Session Info
 print(sessionInfo())
